@@ -24,17 +24,27 @@ var stepx = 1, stepy = 1;
 var stepplus = 1;
 var stepminus = -1;
 
+var flag = false;
+
 var anglex = Math.random();
 console.log(anglex);
 
 var angley = Math.random();
 console.log(angley);
 	
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 
 
 function draw(){
 	
-	
+	if(flag == false){
+		x = getRandomInt(390);
+		y = getRandomInt(390);
+	}
+		
 	if(Math.round(x+10) == 400){
 		stepx = stepminus;
 	}
@@ -54,8 +64,13 @@ function draw(){
     x+=stepx*anglex;
 	
 	y+=stepy*angley;
+	
+	flag = true;
+	
     window.requestAnimationFrame(draw);
 }
+
 draw();
+
 
 
