@@ -73,4 +73,100 @@ function draw(){
 draw();
 
 
+/**/
 
+var canvas;
+var context;
+
+window.onload = function() {
+	   // Определение контекста рисования
+	   canvas = document.getElementById("drawingCanvas");
+	   context = canvas.getContext("2d");
+		 
+	   // Обновляем холст через 0.02 секунды
+	   setTimeout("drawFrame()", 20);
+}
+
+
+function Ball(x, y, dx, dy, radius) {
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.radius = radius;
+    this.strokeColor = "black";
+    this.fillColor = "red";
+}
+
+// array with all balls
+var balls = [];
+
+
+function addBall() {
+    // Устанавливаем размер мячика
+    var radius = parseFloat(document.getElementById("ballSize").value);
+
+    // Создаем новый мячик
+    var ball = new Ball(50,50,1,1,radius);
+
+    // Сохраняем его в массиве
+    balls.push(ball);
+}
+
+
+function clearBalls() {
+  // Удаляем все мячики
+  balls = [];
+}
+
+
+function drawFrame() {
+    // clear canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    //  beginPath() 
+    context.beginPath();
+
+    // draw all balls from array balls[]
+    for(var i=0; i<balls.length; i++) {
+        
+		// current ball
+        var ball = balls[i];
+		
+//		ball.dx = 1;
+//		ball.dy = 1;
+		
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+		
+		
+        // if ball touch left or right
+        if ((ball.x + ball.radius > canvas.width) || (ball.x - ball.radius < 0)) {
+			console.log('left_right');
+            ball.dx = -ball.dx;
+        }
+
+        // if ball touch top or bottom
+        if ((ball.y + ball.radius > canvas.height) || (ball.y - ball.radius < 0)) { 
+			console.log('top_bottom');
+            ball.dy = -ball.dy; 
+        }
+
+        // connected lines
+        if (!document.getElementById("connectedBalls").checked) {
+            context.beginPath();
+            context.fillStyle = ball.fillColor;
+        }
+        else {
+            context.fillStyle = "white";
+        }
+
+        // draw ball
+        context.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+        context.lineWidth = 1;
+        context.fill();
+        context.stroke(); 
+    }
+
+    setTimeout("drawFrame()", 20);
+}
