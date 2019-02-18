@@ -8,12 +8,19 @@
 </head>
 <body>
 
-<!--<canvas id="c1"></canvas>-->
+<!--<canvas id="myCanvas" width="400" height="400"></canvas>-->	
 
-<canvas id="myCanvas" width="400" height="400"></canvas>	
-
-	
-
+<div class="CanvasContainerNew">
+    <canvas id="drawingCanvasNew" width="500" height="340"></canvas>
+	<div>
+		<div class=""></div>
+			Количество точек:<input id="dotsQuantity" type="number" min="0" max="50" value="25">
+			<button onclick="addDots()">Добавить точки</button>
+		</div>
+		<button onclick="addDot()">Добавить точку</button>
+		<button onclick="clearDots()">Очистить холст</button>
+	</div>
+</div>
 
 <div class="CanvasContainer">
     <canvas id="drawingCanvas" width="500" height="340"></canvas>
