@@ -1,180 +1,201 @@
-
-//var example = document.getElementById("c1");
-//var ctx = example.getContext('2d');
-//example.width  = 640;
-//example.height = 480;
-//ctx.strokeRect(15, 15, 266, 266);
-//ctx.strokeRect(18, 18, 260, 260);
-//ctx.fillRect(20, 20, 256, 256);
-//var i, j;
-//for (i = 0; i < 8; i += 2){
-//	for (j = 0; j < 8; j += 2) {
-//		ctx.clearRect(20 + i * 32, 20 + j * 32, 32, 32);
-//		ctx.clearRect(20 + (i + 1) * 32, 20 + (j + 1) * 32, 32, 32);
-//	}
-//}
-
-
-//
-//var c = document.getElementById("myCanvas");
-//var ctxv = c.getContext("2d");
-//var x = 50;
-//var y = 50;
-//var stepx = 1, stepy = 1;
-//var stepplus = 1;
-//var stepminus = -1;
-//
-//var flag = false;
-//
-//var anglex = Math.random();
-//console.log(anglex);
-//
-//var angley = Math.random();
-//console.log(angley);
-//	
-//function getRandomInt(max) {
-//  return Math.floor(Math.random() * Math.floor(max));
-//}
-//
-//
-//
-//function draw(){
-//	
-//	if(flag == false){
-//		x = getRandomInt(390);
-//		y = getRandomInt(390);
-//	}
-//		
-//	if(Math.round(x+10) == 400){
-//		stepx = stepminus;
-//	}
-//	if(Math.round(x) == 0){
-//		stepx = stepplus;
-//	}
-//	if(Math.round(y+10) == 400){
-//		stepy = stepminus;
-//	}
-//	if(Math.round(y) == 0){
-//		stepy = stepplus;
-//	}
-//    ctxv.clearRect(0,0, 400, 400);
-//    ctxv.fillStyle = "red";
-//    ctxv.fillRect(x,y,10,10);
-//	
-//    x+=stepx*anglex;
-//	
-//	y+=stepy*angley;
-//	
-//	flag = true;
-//	
-//    window.requestAnimationFrame(draw);
-//}
-//
-//draw();
-
-
 /**/
 
 var canvas;
 var context;
 
-window.onload = function() {
-	   // Определение контекста рисования
-	   canvas = document.getElementById("drawingCanvas");
-	   context = canvas.getContext("2d");
-		 
-	   // Обновляем холст через 0.02 секунды
-	   setTimeout("drawFrame()", 20);
+
+
+//function Point(x, y, dx, dy, radius) {
+//    this.x = x;
+//    this.y = y;
+//    this.dx = dx;
+//    this.dy = dy;
+//    this.radius = radius;
+//    this.strokeColor = "black";
+//    this.fillColor = "red";
+//}
+
+var Point = {
+	constructor: function(){
+		this.x = Math.floor(Math.random() * Math.floor(canvas.width));
+		this.y = Math.floor(Math.random() * Math.floor(canvas.height));
+		this.dx = (Math.random() * 2) - 1;
+		this.dy = (Math.random() * 2) - 1;
+		
+		
+		this.dotRadius = Math.floor(Math.random() * Math.floor(3))+1;
+
+		return this;
+		//console.log(points);
+	}
 }
 
 
-function Ball(x, y, dx, dy, radius) {
-    this.x = x;
-    this.y = y;
-    this.dx = dx;
-    this.dy = dy;
-    this.radius = radius;
-    this.strokeColor = "black";
-    this.fillColor = "red";
-}
 
-// array with all balls
-var balls = [];
-
-
-function addBall() {
-    // Устанавливаем размер мячика
-    var radius = parseFloat(document.getElementById("ballSize").value);
-
-    // Создаем новый мячик
-    var ball = new Ball(50,50,1,1,radius);
-
-    // Сохраняем его в массиве
-    balls.push(ball);
-}
-
-
-function clearBalls() {
-  // Удаляем все мячики
-  balls = [];
-}
-
+// array with all points
+var points = [];
 
 function drawFrame() {
     // clear canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
-
+	context.fillStyle = "rgba(0,0,0,1)";
+	//context.fillStyle = "grey";
+	context.fillRect(0, 0, canvas.width, canvas.height);
     //  beginPath() 
     context.beginPath();
 
     // draw all balls from array balls[]
-    for(var i=0; i<balls.length; i++) {
+    for(var j=0; j<points.length; j++) {
         
 		// current ball
-        var ball = balls[i];
+        var point = points[j];
 		
-//		ball.dx = 1;
-//		ball.dy = 1;
-		
-        ball.x += ball.dx;
-        ball.y += ball.dy;
-		
+//		dot.x = dot.x*dot.dx;
+//		dot.y = dot.y*dot.dy;
+
+		point.x += point.dx;
+		point.y += point.dy;
 		
         // if ball touch left or right
-        if ((ball.x + ball.radius > canvas.width) || (ball.x - ball.radius < 0)) {
-			console.log('left_right');
-            ball.dx = -ball.dx;
+        if ((point.x > canvas.width) || (point.x < 0)) {
+			//console.log('left_right');
+            point.dx = -point.dx;
         }
 
         // if ball touch top or bottom
-        if ((ball.y + ball.radius > canvas.height) || (ball.y - ball.radius < 0)) { 
-			console.log('top_bottom');
-            ball.dy = -ball.dy; 
+        if ((point.y > canvas.height) || (point.y < 0)) { 
+			//console.log('top_bottom');
+            point.dy = -point.dy; 
         }
+		
 
-        // connected lines
-        if (!document.getElementById("connectedBalls").checked) {
-            context.beginPath();
-            context.fillStyle = ball.fillColor;
-        }
-        else {
-            context.fillStyle = "white";
-        }
+		
+		
+		
+		context.fillStyle = "rgba(130,10,185,1)";
+		context.fillRect(point.x, point.y, point.radius, point.radius);
+		
+		//перебрать весь массив точек
+		//посчитать расстояния между всеми
+		//если расстояние меньше определённого - соединить прямой
+		
+		for(var k=0; k<points.length; k++){
+			var poi = points[k];
+			
+			var leng = Math.sqrt(Math.pow((point.x - poi.x), 2) + Math.pow((point.y - poi.y), 2));
 
-        // draw ball
-        context.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
-        context.lineWidth = 1;
-        context.fill();
-        context.stroke(); 
+			if(leng < 20){
+				
+				context.beginPath();
+				context.moveTo(point.x+point.radius/2, point.y+point.radius/2);
+				context.lineTo(poi.x+point.radius/2, poi.y+point.radius/2);
+				context.lineWidth = 1;
+                context.strokeStyle = "rgba(130,10,185,0.8)";
+				context.stroke();
+								
+			}else
+			if(leng < 40){
+				
+				context.beginPath();
+				context.moveTo(point.x+point.radius/2, point.y+point.radius/2);
+				context.lineTo(poi.x+point.radius/2, poi.y+point.radius/2);
+				context.lineWidth = 1;
+                context.strokeStyle = "rgba(130,10,185,0.6)";
+				context.stroke();
+								
+			}else
+			if(leng < 60){
+				
+				context.beginPath();
+				context.moveTo(point.x+1, point.y+1);
+				context.lineTo(poi.x+point.radius/2, poi.y+point.radius/2);
+				context.lineWidth = 1;
+                context.strokeStyle = "rgba(130,10,185,0.4)";
+				context.stroke();
+								
+			}else
+			if(leng < 80){
+				
+				context.beginPath();
+				context.moveTo(point.x+point.radius/2, point.y+point.radius/2);
+				context.lineTo(poi.x+point.radius/2, poi.y+point.radius/2);
+				context.lineWidth = 1;
+                context.strokeStyle = "rgba(130,10,185,0.2)";
+				context.stroke();
+								
+			}
+		}
+		
+
     }
 
     setTimeout("drawFrame()", 20);
 }
 
+
+function clearPoints() {
+	points = [];
+}
+
+function addPoints(){
+	var z = 0;
+	var quant = document.getElementById("dotsQuantitys").value;
+	
+	//console.log(document.getElementById("dotsQuantitys"));
+	
+	while(z<quant){
+		addPoint();
+		z++;
+	}
+		
+	
+}
+
+function addPoint() {
+//	console.log('Points');
+//	//Math.floor(Math.random() * Math.floor(max))
+//	var newx = Math.floor(Math.random() * Math.floor(canvas.width));
+//	var newy = Math.floor(Math.random() * Math.floor(canvas.height));
+//	var ndx = (Math.random() * 2) - 1;
+//	var ndy = (Math.random() * 2) - 1;
+//	var dotRadius = Math.floor(Math.random() * Math.floor(3))+1;
+//		
+//	var point = new Point(newx, newy, ndx, ndy, dotRadius, 2, Date.now());
+//	points.push(point);
+//	console.log(points);
+	
+	var new_point = Object.create(Point).constructor();
+	console.log(new_point);
+	points.push(new_point);
+	console.log(points);
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*---------------------------------------------------*/
 
 /*   drawingCanvasNew  */
-
+/* canvas with dx dy */
 
 
 
@@ -207,17 +228,9 @@ function Dot(x, y, dx, dy, radius, speed, time) {
     
 }
 
-// array with all balls
+// array with all dots
 var dots = [];
 
-
-//function addDot() {
-//    
-//    var dot = new Dot(0,0,1,1,2,Date.now());
-//
-//    // Сохраняем его в массиве
-//    dots.push(dot);
-//}
 
 function drawCanvas() {
     // clear canvas
@@ -311,12 +324,6 @@ function drawCanvas() {
 		}
 		
 
-
-        // draw dot
-				
-//        contextNew.lineWidth = 1;
-//        contextNew.fill();
-//        contextNew.stroke(); 
     }
 
     setTimeout("drawCanvas()", 20);

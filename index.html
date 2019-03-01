@@ -24,15 +24,18 @@
 
 <div class="CanvasContainer">
     <canvas id="drawingCanvas" width="500" height="340"></canvas>
+	
+	<div>
+		<div class=""></div>
+			Количество точек:<input id="dotsQuantitys" type="number" min="0" max="50" value="25">
+			<button onclick="addPoints()">Добавить точки</button>
+		</div>
+		<button onclick="addPoint()">Добавить точку</button>
+		<button onclick="clearPoints()">Очистить холст</button>
+	</div>
+	
 </div>
-<div>
-    <button onclick="addBall()">Добавить мячик</button>
-    <button onclick="clearBalls()">Очистить холст</button>
-</div>
-<div>
-    Размер мячика:<input id="ballSize" type="number" min="0" max="50" value="15">
-    <input id="connectedBalls" type="checkbox">Добавить соединяющие линии<br>
-</div>
+
 
 
 	
