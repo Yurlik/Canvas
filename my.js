@@ -15,20 +15,36 @@ var context;
 //    this.fillColor = "red";
 //}
 
-var Point = {
-	constructor: function(){
+//var Point = {
+//	constructor: function(){
+//		this.x = Math.floor(Math.random() * Math.floor(canvas.width));
+//		this.y = Math.floor(Math.random() * Math.floor(canvas.height));
+//		this.dx = (Math.random() * 2) - 1;
+//		this.dy = (Math.random() * 2) - 1;
+//		
+//		
+//		this.dotRadius = Math.floor(Math.random() * Math.floor(3))+1;
+//
+//		return this;
+//		//console.log(points);
+//	}
+//}
+
+class Point {
+	
+	constructor(){
 		this.x = Math.floor(Math.random() * Math.floor(canvas.width));
 		this.y = Math.floor(Math.random() * Math.floor(canvas.height));
 		this.dx = (Math.random() * 2) - 1;
 		this.dy = (Math.random() * 2) - 1;
-		
-		
-		this.dotRadius = Math.floor(Math.random() * Math.floor(3))+1;
-
-		return this;
-		//console.log(points);
+		this.pointRadius = Math.floor(Math.random() * Math.floor(3))+1;
 	}
+	
+	
+	
+	
 }
+
 
 
 
@@ -73,7 +89,7 @@ function drawFrame() {
 		
 		
 		context.fillStyle = "rgba(130,10,185,1)";
-		context.fillRect(point.x, point.y, point.radius, point.radius);
+		context.fillRect(point.x, point.y, point.pointRadius, point.pointRadius);
 		
 		//перебрать весь массив точек
 		//посчитать расстояния между всеми
@@ -87,8 +103,8 @@ function drawFrame() {
 			if(leng < 20){
 				
 				context.beginPath();
-				context.moveTo(point.x+point.radius/2, point.y+point.radius/2);
-				context.lineTo(poi.x+point.radius/2, poi.y+point.radius/2);
+				context.moveTo(point.x+point.pointRadius/2, point.y+point.pointRadius/2);
+				context.lineTo(poi.x+point.pointRadius/2, poi.y+point.pointRadius/2);
 				context.lineWidth = 1;
                 context.strokeStyle = "rgba(130,10,185,0.8)";
 				context.stroke();
@@ -97,8 +113,8 @@ function drawFrame() {
 			if(leng < 40){
 				
 				context.beginPath();
-				context.moveTo(point.x+point.radius/2, point.y+point.radius/2);
-				context.lineTo(poi.x+point.radius/2, poi.y+point.radius/2);
+				context.moveTo(point.x+point.pointRadius/2, point.y+point.pointRadius/2);
+				context.lineTo(poi.x+point.pointRadius/2, poi.y+point.pointRadius/2);
 				context.lineWidth = 1;
                 context.strokeStyle = "rgba(130,10,185,0.6)";
 				context.stroke();
@@ -107,8 +123,8 @@ function drawFrame() {
 			if(leng < 60){
 				
 				context.beginPath();
-				context.moveTo(point.x+1, point.y+1);
-				context.lineTo(poi.x+point.radius/2, poi.y+point.radius/2);
+				context.moveTo(point.x+point.pointRadius/2, point.y+point.pointRadius/2);
+				context.lineTo(poi.x+point.pointRadius/2, poi.y+point.pointRadius/2);
 				context.lineWidth = 1;
                 context.strokeStyle = "rgba(130,10,185,0.4)";
 				context.stroke();
@@ -117,8 +133,8 @@ function drawFrame() {
 			if(leng < 80){
 				
 				context.beginPath();
-				context.moveTo(point.x+point.radius/2, point.y+point.radius/2);
-				context.lineTo(poi.x+point.radius/2, poi.y+point.radius/2);
+				context.moveTo(point.x+point.pointRadius/2, point.y+point.pointRadius/2);
+				context.lineTo(poi.x+point.pointRadius/2, poi.y+point.pointRadius/2);
 				context.lineWidth = 1;
                 context.strokeStyle = "rgba(130,10,185,0.2)";
 				context.stroke();
@@ -164,11 +180,9 @@ function addPoint() {
 //	points.push(point);
 //	console.log(points);
 	
-	var new_point = Object.create(Point).constructor();
-	console.log(new_point);
-	points.push(new_point);
+	var point = new Point();
+	points.push(point);
 	console.log(points);
-	
 }
 
 
